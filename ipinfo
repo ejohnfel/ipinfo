@@ -1,0 +1,59 @@
+#!/bin/bash
+
+OPTS=""
+TMP=/tmp/tmp.${RANDOM}
+
+# Fields
+NETRANGE=""
+CIDR=""
+NETNAME=""
+PARENT=""
+ORGNAME=""
+REGDATE=""
+UPDATED=""
+COUNTRY=""
+ORGABUSEEMAIL=""
+
+while [ ! "${1}" = "" ]; do
+	whois "${OPTS}" "${1}" > "${TMP}"
+
+	shift 1
+
+	while read field value; do
+		if [[ ${field} =~ ^[a-zA-Z]+\: ]]; then
+			case "${field}" in
+			"NetRange:")
+				NETRANGE="${value}" ;
+				;;
+			"CIDR:")
+				CIDR="${value}";
+				;;
+			"NetName:")
+				NETNAME="${value}";
+				;;
+			"Parent:")
+				PARENT="${value}";
+				;;
+			"OrgName:")
+				ORGNAME="${value}";
+				;;
+			"RegDate:")
+				REGDATE="${value}";
+				;;
+			"Updated:")
+				UPDATED="${value}";
+				;;
+			"Country:")
+				COUNTRY="${value}";
+				;;
+			"OrgAbuseEmail:")
+				ORGABUSEEMAIL="${value}";
+				;;
+			esac
+		fi
+	done < "${TMP}"
+
+	echo -e "${CIDR},${NETRANGE},${COUNTRY},${NETNAME},${ORGNAME},${PARENT},${REGDATE},${UPDATED},${ORGABUSEEMAIL}"
+
+	[ -e "${TMP}" ] && rm "${TMP}"
+done
