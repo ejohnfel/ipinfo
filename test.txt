@@ -1,0 +1,11 @@
+T1: This is a test 129.49.31.0
+T2: This is 0.0.0.0 also a test
+T3: 67.34.22.33
+T4: and this 200.645.4000
+
+T5: another test 999.999.999.999
+T6: another 200.255.255.255
+T7: another 199.0.4.2
+T8: 0.200.255.255
+T9: 260.250.250.250
+129.49.31.0 :T10 - word boundary at start of string test
