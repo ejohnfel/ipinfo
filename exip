@@ -44,7 +44,10 @@ function Whois()
 # Extract IPs
 function ExtractIPs()
 {
-	egrep -o "([0-9]{1,3}\.){3}[0-9]{1,3}" "${1}" > ${TMPFILE}
+	MAXQUAD="([0-9]|[1-9]{1,2}|1[0-9]{1,2}|2[0-4][0-9]|25[0-5])"
+	EXPR="[[:space:][:punct:]]{0,1}(${MAXQUAD}\.){3}${MAXQUAD}"
+
+	grep -o -E "${EXPR}" "${1}" | tr -d "[:blank:]" > ${TMPFILE}
 
 	if [ ${DNSRESOLV} -ne 0 -o ${WHOIS} -ne 0 ]; then
 		while read ip; do
